@@ -62,11 +62,6 @@ class DetailViewController: UIViewController {
         }
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        self.textField.becomeFirstResponder()
-    }
-    
     func configuration(simpleMark: Note? = nil, with state: WorkState) {
         self.state = state
         self.simpleMark = simpleMark
