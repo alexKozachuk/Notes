@@ -10,13 +10,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Notes/ViewController.swift"
-            timestampString = "580312744.8367569"
+            timestampString = "580315124.288781"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "165"
             endingLineNumber = "165"
-            landmarkName = "deleteAction(at:)"
-            landmarkType = "7">
+            landmarkName = "ViewController"
+            landmarkType = "21">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -26,12 +26,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Notes/ViewController.swift"
-            timestampString = "580312744.8369811"
+            timestampString = "580315124.288918"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "162"
             endingLineNumber = "162"
-            landmarkName = "deleteAction(at:)"
+            landmarkName = "editAction(at:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

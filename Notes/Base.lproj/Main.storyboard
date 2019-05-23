@@ -42,7 +42,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12:32" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dOr-7j-W34">
-                                                    <rect key="frame" x="357" y="11" width="36" height="17"/>
+                                                    <rect key="frame" x="358" y="11" width="36" height="17"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
@@ -54,7 +54,7 @@
                                                 <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="m8e-q5-4Zn" secondAttribute="trailing" constant="60" id="8qx-Ms-zWt"/>
                                                 <constraint firstItem="xRC-xZ-APT" firstAttribute="top" secondItem="g2a-6I-ARI" secondAttribute="topMargin" id="MqG-TB-XYQ"/>
                                                 <constraint firstItem="dOr-7j-W34" firstAttribute="top" secondItem="g2a-6I-ARI" secondAttribute="top" constant="11" id="Tkz-0j-DzH"/>
-                                                <constraint firstAttribute="trailing" secondItem="dOr-7j-W34" secondAttribute="trailing" constant="-17" id="dLN-yP-ulb"/>
+                                                <constraint firstAttribute="trailing" secondItem="dOr-7j-W34" secondAttribute="trailing" constant="-18" id="dLN-yP-ulb"/>
                                                 <constraint firstItem="xRC-xZ-APT" firstAttribute="leading" secondItem="g2a-6I-ARI" secondAttribute="leadingMargin" id="fZ5-Gj-wgI"/>
                                                 <constraint firstItem="m8e-q5-4Zn" firstAttribute="top" secondItem="xRC-xZ-APT" secondAttribute="bottom" constant="2" id="nLC-TN-j5q"/>
                                             </constraints>
@@ -99,16 +99,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Dho-Ap-5hH">
-                                <rect key="frame" x="10" y="54" width="394" height="798"/>
+                                <rect key="frame" x="10" y="54" width="394" height="842"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <mutableString key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</mutableString>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="A82-qd-4Mp" firstAttribute="bottom" secondItem="Dho-Ap-5hH" secondAttribute="bottom" constant="10" id="Ane-s9-0Ye"/>
+                            <constraint firstItem="A82-qd-4Mp" firstAttribute="bottom" secondItem="Dho-Ap-5hH" secondAttribute="bottom" constant="-34" id="AWq-MQ-U6d"/>
                             <constraint firstItem="Dho-Ap-5hH" firstAttribute="top" secondItem="A82-qd-4Mp" secondAttribute="top" constant="10" id="FJM-In-iec"/>
                             <constraint firstItem="A82-qd-4Mp" firstAttribute="trailing" secondItem="Dho-Ap-5hH" secondAttribute="trailing" constant="10" id="PYj-jB-hQf"/>
                             <constraint firstItem="Dho-Ap-5hH" firstAttribute="leading" secondItem="A82-qd-4Mp" secondAttribute="leading" constant="10" id="VKL-o4-hKu"/>
@@ -116,12 +116,13 @@
                         <viewLayoutGuide key="safeArea" id="A82-qd-4Mp"/>
                     </view>
                     <connections>
+                        <outlet property="keyboardHeightLayoutConstraint" destination="AWq-MQ-U6d" id="pUg-aD-ftw"/>
                         <outlet property="textField" destination="Dho-Ap-5hH" id="qZD-ei-7TW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="It6-xc-h22" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2017" y="130"/>
+            <point key="canvasLocation" x="2015.9420289855075" y="129.91071428571428"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="gJG-xU-cCS">

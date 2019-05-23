@@ -51,7 +51,7 @@ class ViewController: UIViewController {
     }
 
     func setupNavigation() {
-        navigationItem.title = "Заметки"
+        navigationItem.title = "Notes"
         let addItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(openAddView))
         let iconImage = UIImage(named: "SortIcon")
         let sortItem = UIBarButtonItem(image: iconImage, landscapeImagePhone: iconImage, style: .plain, target: self, action: #selector(sortNotes))
@@ -76,11 +76,11 @@ class ViewController: UIViewController {
     
     @objc func sortNotes() {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        alert.addAction(UIAlertAction(title: "От старых к новым", style: .default){ [weak self] _ in
+        alert.addAction(UIAlertAction(title: "From old to new", style: .default){ [weak self] _ in
             self?.isSorted = true
             self?.reloadData()
         })
-        alert.addAction(UIAlertAction(title: "От новых к старым", style: .default){ [weak self] _ in
+        alert.addAction(UIAlertAction(title: "From new to old", style: .default){ [weak self] _ in
             self?.isSorted = false
             self?.reloadData()
         })

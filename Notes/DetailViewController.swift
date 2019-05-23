@@ -14,18 +14,40 @@ class DetailViewController: UIViewController {
         case view, edit, add
     }
     
+    @IBOutlet var keyboardHeightLayoutConstraint: NSLayoutConstraint?
     @IBOutlet weak var textField: UITextView!
     
     var state: WorkState = .view
     var simpleMark: Note?
     
-    var saveButton = UIBarButtonItem(title: "Cохранить", style: .done, target: self, action: #selector(addItem))
-    var editButton = UIBarButtonItem(title: "Редактировать", style: .plain, target: self, action: #selector(editItem))
+    var saveButton = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(addItem))
+    var editButton = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(editItem))
     var shareButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(shareItem))
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupNotification()
+        setupState()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.textField.becomeFirstResponder()
+    }
+    
+    func setupNotification() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(self.keyboardNotification(notification:)),
+                                               name: UIResponder.keyboardWillChangeFrameNotification,
+                                               object: nil)
+    }
+    
+    func setupState() {
         switch self.state {
         case .add:
             navigationItem.setRightBarButton(saveButton, animated: false)
@@ -79,4 +101,26 @@ class DetailViewController: UIViewController {
         }
     }
     
+    @objc func keyboardNotification(notification: NSNotification) {
+        if let userInfo = notification.userInfo {
+            let endFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
+            let endFrameY = endFrame?.origin.y ?? 0
+            let duration:TimeInterval = (userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber)?.doubleValue ?? 0
+            let animationCurveRawNSN = userInfo[UIResponder.keyboardAnimationCurveUserInfoKey] as? NSNumber
+            let animationCurveRaw = animationCurveRawNSN?.uintValue ?? UIView.AnimationOptions.curveEaseInOut.rawValue
+            let animationCurve:UIView.AnimationOptions = UIView.AnimationOptions(rawValue: animationCurveRaw)
+            if endFrameY >= UIScreen.main.bounds.size.height {
+                self.keyboardHeightLayoutConstraint?.constant = 0.0
+            } else {
+                let height = endFrame?.size.height ?? 0.0
+                self.keyboardHeightLayoutConstraint?.constant = height - 40
+            }
+            UIView.animate(withDuration: duration,
+                           delay: TimeInterval(0),
+                           options: animationCurve,
+                           animations: { self.view.layoutIfNeeded() },
+                           completion: nil)
+        }
+    }
+
 }
