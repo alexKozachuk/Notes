@@ -12,14 +12,10 @@ import RealmSwift
 
 class RealmService {
     
-    enum LastOperation {
-        case create, delete, update
-    }
-    
     private init() {}
     static let shared = RealmService()
-    var isEdit: Bool = false
     
+    var isEdit: Bool = false
     var realm = try! Realm()
     
     func create<T: Object>(_ object: T) {

@@ -41,6 +41,7 @@ class ViewController: UIViewController {
     func setupRealm() {
         let realm = RealmService.shared.realm
         notes = realm.objects(Note.self)
+        
         notificationToken = realm.observe { (notification, realm) in
             
             if RealmService.shared.isEdit {
