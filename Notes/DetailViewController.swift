@@ -8,27 +8,35 @@
 
 import UIKit
 
+protocol State {
+    var isEditable: Bool { get }
+    var isEmpty: Bool { get }
+    var nameButton: String { get }
+    func butonClicked()
+}
+
 class DetailViewController: UIViewController {
     
-    enum WorkState {
-        case view, edit, add
-    }
+    var stateView: State!
     
     @IBOutlet var keyboardHeightLayoutConstraint: NSLayoutConstraint?
     @IBOutlet weak var textField: UITextView!
     
-    var state: WorkState = .view
     var simpleMark: Note?
-    
-    var saveButton = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(addItem))
-    var editButton = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(editItem))
-    var shareButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(shareItem))
+    var button = UIBarButtonItem(title: "Button", style: .plain, target: self, action: #selector(buttonClicked))
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupNotification()
-        setupState()
+        setupNavigation()
+    }
+    
+    func setupNotification() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(self.keyboardNotification(notification:)),
+                                               name: UIResponder.keyboardWillChangeFrameNotification,
+                                               object: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -40,60 +48,23 @@ class DetailViewController: UIViewController {
         self.textField.becomeFirstResponder()
     }
     
-    func setupNotification() {
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(self.keyboardNotification(notification:)),
-                                               name: UIResponder.keyboardWillChangeFrameNotification,
-                                               object: nil)
-    }
-    
-    func setupState() {
-        switch self.state {
-        case .add:
-            navigationItem.setRightBarButton(saveButton, animated: false)
-        case .edit:
-            textField.isEditable = false
-            navigationItem.setRightBarButton(editButton, animated: false)
-            textField.text = simpleMark?.text
-        case .view:
-            textField.isEditable = false
-            navigationItem.setRightBarButton(shareButton, animated: false)
-            textField.text = simpleMark?.text
-        }
-    }
-    
-    func configuration(simpleMark: Note? = nil, with state: WorkState) {
-        self.state = state
+    func configuration(simpleMark: Note? = nil, with state: State) {
+        self.stateView = state
         self.simpleMark = simpleMark
     }
     
-    @objc func addItem() {
-        let text = textField.text ?? ""
-        
-        
-        if state == .add {
-            let simpleMark = Note(text: text, date: Date())
-            RealmService.shared.create(simpleMark)
-        } else {
-            let dict: [String: Any?] = ["text" : text,
-                                        "date" : Date()]
-            guard let simpleMark = simpleMark else { return }
-            RealmService.shared.update(simpleMark, with: dict)
+    
+    func setupNavigation() {
+        button.title = stateView.nameButton
+        textField.isEditable = stateView.isEditable
+        if !stateView.isEmpty {
+            textField.text = simpleMark?.text
         }
-        
-        navigationController!.popViewController(animated: true)
+        navigationItem.setRightBarButton(button, animated: false)
     }
     
-    @objc func editItem() {
-        navigationItem.setRightBarButton(saveButton, animated: true)
-        textField.isEditable = true
-    }
-    
-    @objc func shareItem() {
-        if let simpleMark = simpleMark {
-            let vc = UIActivityViewController(activityItems: [simpleMark.text], applicationActivities: [])
-            present(vc, animated: true)
-        }
+    @objc func buttonClicked() {
+        stateView.butonClicked()
     }
     
     @objc func keyboardNotification(notification: NSNotification) {

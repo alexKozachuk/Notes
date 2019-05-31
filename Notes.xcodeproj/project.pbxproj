@@ -17,6 +17,9 @@
 		D9503BA122965FEF00962828 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9503BA022965FEF00962828 /* Note.swift */; };
 		D9503BA32296604400962828 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9503BA22296604300962828 /* DetailViewController.swift */; };
 		D9503BA52296609800962828 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9503BA42296609800962828 /* TableViewCell.swift */; };
+		D99C104722A12D2600402E10 /* ViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99C104622A12D2600402E10 /* ViewState.swift */; };
+		D99C104922A12D3000402E10 /* EditState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99C104822A12D3000402E10 /* EditState.swift */; };
+		D99C104B22A12D3C00402E10 /* AddState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99C104A22A12D3C00402E10 /* AddState.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +36,9 @@
 		D9503BA022965FEF00962828 /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		D9503BA22296604300962828 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		D9503BA42296609800962828 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
+		D99C104622A12D2600402E10 /* ViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewState.swift; sourceTree = "<group>"; };
+		D99C104822A12D3000402E10 /* EditState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditState.swift; sourceTree = "<group>"; };
+		D99C104A22A12D3C00402E10 /* AddState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddState.swift; sourceTree = "<group>"; };
 		F4F8530A3F4EA0566C03A6F8 /* Pods_Notes.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Notes.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -92,8 +98,8 @@
 		D9503BA82296CE1C00962828 /* View Controller */ = {
 			isa = PBXGroup;
 			children = (
-				D9503BA22296604300962828 /* DetailViewController.swift */,
 				D9503B8E2296497500962828 /* ViewController.swift */,
+				D99C104D22A13F1F00402E10 /* DetailViewController */,
 			);
 			name = "View Controller";
 			sourceTree = "<group>";
@@ -121,6 +127,25 @@
 				D9503B952296497600962828 /* LaunchScreen.storyboard */,
 			);
 			name = Storyboard;
+			sourceTree = "<group>";
+		};
+		D99C104C22A13E7200402E10 /* State */ = {
+			isa = PBXGroup;
+			children = (
+				D99C104622A12D2600402E10 /* ViewState.swift */,
+				D99C104822A12D3000402E10 /* EditState.swift */,
+				D99C104A22A12D3C00402E10 /* AddState.swift */,
+			);
+			name = State;
+			sourceTree = "<group>";
+		};
+		D99C104D22A13F1F00402E10 /* DetailViewController */ = {
+			isa = PBXGroup;
+			children = (
+				D9503BA22296604300962828 /* DetailViewController.swift */,
+				D99C104C22A13E7200402E10 /* State */,
+			);
+			name = DetailViewController;
 			sourceTree = "<group>";
 		};
 		F15C5194ECE7797E06AF3F5B /* Pods */ = {
@@ -263,6 +288,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				D9503B8F2296497500962828 /* ViewController.swift in Sources */,
+				D99C104922A12D3000402E10 /* EditState.swift in Sources */,
+				D99C104B22A12D3C00402E10 /* AddState.swift in Sources */,
+				D99C104722A12D2600402E10 /* ViewState.swift in Sources */,
 				D9503B9F22965F9200962828 /* RealmService.swift in Sources */,
 				D9503BA32296604400962828 /* DetailViewController.swift in Sources */,
 				D9503BA52296609800962828 /* TableViewCell.swift in Sources */,

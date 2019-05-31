@@ -71,7 +71,7 @@ class ViewController: UIViewController {
     
     @objc func openAddView() {
         let vc = storyboard?.instantiateViewController(withIdentifier: "DetailVC") as! DetailViewController
-        vc.configuration(with: .add)
+        vc.configuration(with: AddState(vc))
         navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -130,7 +130,7 @@ extension ViewController: UITableViewDelegate {
         
         let vc = storyboard?.instantiateViewController(withIdentifier: "DetailVC") as! DetailViewController
         let note = notes[indexPath.row]
-        vc.configuration(simpleMark: note, with: .view)
+        vc.configuration(simpleMark: note, with: ViewState(vc))
         navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -148,7 +148,7 @@ extension ViewController: UITableViewDelegate {
         let note = notes[indexPath.row]
         let action = UIContextualAction(style: .normal, title: "Edit") { [weak self] (action, view, completion) in
             let vc = self?.storyboard?.instantiateViewController(withIdentifier: "DetailVC") as! DetailViewController
-            vc.configuration(simpleMark: note, with: .edit)
+            vc.configuration(simpleMark: note, with: EditState(vc))
             self?.navigationController?.pushViewController(vc, animated: true)
             completion(true)
         }
