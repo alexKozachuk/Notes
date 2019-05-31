@@ -12,16 +12,21 @@ import UIKit
 
 
 class EditState: State {
+    
     private weak var view: DetailViewController?
+    private let nameButton: String = "Edit"
+    var isEdit: Bool = false
     
     init(_ view: DetailViewController) {
         self.view = view
     }
     
-    let isEmpty: Bool = false
-    let isEditable: Bool = false
-    let nameButton: String = "Edit"
-    var isEdit: Bool = false
+    func setup() {
+        view?.button.title = nameButton
+        view?.textField.text = view?.simpleMark?.text ?? ""
+        view?.textField.isEditable = false
+        view?.navigationItem.rightBarButtonItem = view?.button
+    }
     
     func butonClicked() {
         
@@ -38,6 +43,6 @@ class EditState: State {
             view?.textField.isEditable = true
             isEdit.toggle()
         }
-        
     }
+    
 }

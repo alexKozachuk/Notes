@@ -9,27 +9,26 @@
 import UIKit
 
 protocol State {
-    var isEditable: Bool { get }
-    var isEmpty: Bool { get }
-    var nameButton: String { get }
+    func setup()
     func butonClicked()
 }
 
 class DetailViewController: UIViewController {
     
-    var stateView: State!
+    var state: State!
     
     @IBOutlet var keyboardHeightLayoutConstraint: NSLayoutConstraint?
     @IBOutlet weak var textField: UITextView!
     
     var simpleMark: Note?
     var button = UIBarButtonItem(title: "Button", style: .plain, target: self, action: #selector(buttonClicked))
+    var shareButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(buttonClicked))
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupNotification()
-        setupNavigation()
+        state.setup()
     }
     
     func setupNotification() {
@@ -49,22 +48,12 @@ class DetailViewController: UIViewController {
     }
     
     func configuration(simpleMark: Note? = nil, with state: State) {
-        self.stateView = state
+        self.state = state
         self.simpleMark = simpleMark
     }
     
-    
-    func setupNavigation() {
-        button.title = stateView.nameButton
-        textField.isEditable = stateView.isEditable
-        if !stateView.isEmpty {
-            textField.text = simpleMark?.text
-        }
-        navigationItem.setRightBarButton(button, animated: false)
-    }
-    
     @objc func buttonClicked() {
-        stateView.butonClicked()
+        state.butonClicked()
     }
     
     @objc func keyboardNotification(notification: NSNotification) {

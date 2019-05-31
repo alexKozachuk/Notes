@@ -10,14 +10,17 @@ import Foundation
 import UIKit
 
 class ViewState: State {
+    
     private weak var view: DetailViewController?
-
-    let isEmpty: Bool = false
-    let isEditable: Bool = false
-    let nameButton: String = "Share"
     
     init(_ view: DetailViewController) {
         self.view = view
+    }
+    
+    func setup() {
+        view?.textField.isEditable = false
+        view?.textField.text = view?.simpleMark?.text ?? ""
+        view?.navigationItem.rightBarButtonItem = view?.shareButton
     }
     
     func butonClicked() {
@@ -26,6 +29,7 @@ class ViewState: State {
             view?.present(vc, animated: true)
         }
     }
+    
 }
 
 

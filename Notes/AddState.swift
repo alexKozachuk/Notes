@@ -12,13 +12,16 @@ import UIKit
 class AddState: State {
     
     private weak var view: DetailViewController?
-    
-    let isEmpty: Bool = true
-    let isEditable: Bool = true
-    let nameButton: String = "Save"
+    private let nameButton: String = "Save"
     
     init(_ view: DetailViewController) {
         self.view = view
+    }
+    
+    func setup() {
+        view?.button.title = nameButton
+        view?.textField.isEditable = false
+        view?.navigationItem.rightBarButtonItem = view?.button
     }
     
     func butonClicked() {
@@ -29,4 +32,5 @@ class AddState: State {
         
         view?.navigationController!.popViewController(animated: true)
     }
+    
 }
