@@ -20,7 +20,7 @@ class AddState: State {
     
     func setup() {
         view?.button.title = nameButton
-        view?.textField.isEditable = false
+        view?.textField.isEditable = true
         view?.navigationItem.rightBarButtonItem = view?.button
     }
     
