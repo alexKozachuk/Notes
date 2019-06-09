@@ -11,13 +11,20 @@ import Foundation
 import RealmSwift
 
 class RealmService {
+
+    private init() {
+        do {
+            realm = try Realm()
+        } catch let error as NSError {
+            fatalError("Realm does not work")
+        }
+    }
     
-    private init() {}
     static let shared = RealmService()
-    
+
     var isEdit: Bool = false
-    var realm = try! Realm()
-    
+    var realm: Realm
+
     func create<T: Object>(_ object: T) {
         do {
             try realm.write {
@@ -28,7 +35,7 @@ class RealmService {
             post(error)
         }
     }
-    
+
     func delete<T: Object>(_ object: T) {
         do {
             try realm.write {
@@ -39,7 +46,7 @@ class RealmService {
             post(error)
         }
     }
-    
+
     func update<T: Object>(_ object: T, with dictionary: [String: Any?]) {
         do {
             try realm.write {
@@ -52,11 +59,11 @@ class RealmService {
             post(error)
         }
     }
-    
+
     func post(_ error: Error) {
         NotificationCenter.default.post(name: NSNotification.Name("RealmError"), object: error)
     }
-    
+
     func observeRealmErrors(in vc: UIViewController, competition: @escaping (Error?) -> Void) {
         NotificationCenter.default.addObserver(forName: Notification.Name("RealmError"),
                                                object: nil,
@@ -64,7 +71,7 @@ class RealmService {
                                                 competition(notification.object as? Error)
         }
     }
-    
+
     func stopObservingErrors(in vc: UIViewController) {
         NotificationCenter.default.removeObserver(vc, name: Notification.Name("RealmError"), object: nil)
     }

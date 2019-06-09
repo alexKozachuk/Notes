@@ -17,6 +17,8 @@
 		D9503BA122965FEF00962828 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9503BA022965FEF00962828 /* Note.swift */; };
 		D9503BA32296604400962828 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9503BA22296604300962828 /* DetailViewController.swift */; };
 		D9503BA52296609800962828 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9503BA42296609800962828 /* TableViewCell.swift */; };
+		D9560DA422ACFBE30067A12F /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9560DA322ACFBE30067A12F /* Realm.framework */; };
+		D9560DA622ACFBE70067A12F /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9560DA522ACFBE70067A12F /* RealmSwift.framework */; };
 		D99C104722A12D2600402E10 /* ViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99C104622A12D2600402E10 /* ViewState.swift */; };
 		D99C104922A12D3000402E10 /* EditState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99C104822A12D3000402E10 /* EditState.swift */; };
 		D99C104B22A12D3C00402E10 /* AddState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99C104A22A12D3C00402E10 /* AddState.swift */; };
@@ -36,6 +38,8 @@
 		D9503BA022965FEF00962828 /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		D9503BA22296604300962828 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		D9503BA42296609800962828 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
+		D9560DA322ACFBE30067A12F /* Realm.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Realm.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D9560DA522ACFBE70067A12F /* RealmSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RealmSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D99C104622A12D2600402E10 /* ViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewState.swift; sourceTree = "<group>"; };
 		D99C104822A12D3000402E10 /* EditState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditState.swift; sourceTree = "<group>"; };
 		D99C104A22A12D3C00402E10 /* AddState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddState.swift; sourceTree = "<group>"; };
@@ -47,6 +51,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D9560DA622ACFBE70067A12F /* RealmSwift.framework in Frameworks */,
+				D9560DA422ACFBE30067A12F /* Realm.framework in Frameworks */,
 				3EDD505271F0BB576A4F87D3 /* Pods_Notes.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -160,6 +166,8 @@
 		F5B8F0E4DF99F67534123FF3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D9560DA522ACFBE70067A12F /* RealmSwift.framework */,
+				D9560DA322ACFBE30067A12F /* Realm.framework */,
 				F4F8530A3F4EA0566C03A6F8 /* Pods_Notes.framework */,
 			);
 			name = Frameworks;
@@ -177,6 +185,7 @@
 				D9503B862296497500962828 /* Frameworks */,
 				D9503B872296497500962828 /* Resources */,
 				36F5463999A9D5C934F09D14 /* [CP] Embed Pods Frameworks */,
+				D9560DA222ACFB280067A12F /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -279,6 +288,23 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
+		};
+		D9560DA222ACFB280067A12F /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n\nif which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"error: SwiftLint does not exist, download it from https://github.com/realm/SwiftLint\"\nexit 1\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

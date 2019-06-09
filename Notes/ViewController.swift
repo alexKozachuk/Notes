@@ -10,23 +10,23 @@ import UIKit
 import RealmSwift
 
 class ViewController: UIViewController {
-    
+
     @IBOutlet weak var tableView: UITableView!
-    var backgroundLabel : UILabel = UILabel()
+    var backgroundLabel: UILabel = UILabel()
     var notes: Results<Note>!
     var notificationToken: NotificationToken?
     let searchController = UISearchController(searchResultsController: nil)
     var isSorted: Bool = true
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+
         setupBackgroundView()
         setupRealm()
         setupNavigation()
         setupSearchController()
     }
-    
+
     func setupBackgroundView() {
         backgroundLabel.text = "You haven't added any notes yet.\n Tap the + button to add a new notes."
         backgroundLabel.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height)
@@ -34,21 +34,21 @@ class ViewController: UIViewController {
         backgroundLabel.textAlignment = NSTextAlignment.center
         backgroundLabel.sizeToFit()
         backgroundLabel.isHidden = false
-        
+
         self.tableView.backgroundView = backgroundLabel
     }
-    
+
     func setupRealm() {
         let realm = RealmService.shared.realm
         notes = realm.objects(Note.self)
-        
-        notificationToken = realm.observe { (notification, realm) in
-            
+
+        notificationToken = realm.observe { (_, _) in
+
             if RealmService.shared.isEdit {
                 self.tableView.reloadData()
             }
         }
-        
+
     }
 
     func setupNavigation() {
@@ -58,7 +58,7 @@ class ViewController: UIViewController {
         let sortItem = UIBarButtonItem(image: iconImage, landscapeImagePhone: iconImage, style: .plain, target: self, action: #selector(sortNotes))
         navigationItem.rightBarButtonItems = [addItem, sortItem]
     }
-    
+
     func setupSearchController() {
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.searchResultsUpdater = self
@@ -68,54 +68,56 @@ class ViewController: UIViewController {
         navigationItem.hidesSearchBarWhenScrolling = false
         navigationItem.searchController = searchController
     }
-    
+
     @objc func openAddView() {
-        let vc = storyboard?.instantiateViewController(withIdentifier: "DetailVC") as! DetailViewController
+        guard let vc = storyboard?.instantiateViewController(withIdentifier: "DetailVC") as? DetailViewController else { return }
         vc.configuration(with: AddState(vc))
         navigationController?.pushViewController(vc, animated: true)
     }
-    
+
     @objc func sortNotes() {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        alert.addAction(UIAlertAction(title: "From old to new", style: .default){ [weak self] _ in
+        alert.addAction(UIAlertAction(title: "From old to new", style: .default) { [weak self] _ in
             self?.isSorted = true
             self?.reloadData()
         })
-        alert.addAction(UIAlertAction(title: "From new to old", style: .default){ [weak self] _ in
+        alert.addAction(UIAlertAction(title: "From new to old", style: .default) { [weak self] _ in
             self?.isSorted = false
             self?.reloadData()
         })
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         present(alert, animated: true)
     }
-    
+
     func reloadData() {
         let realm = RealmService.shared.realm
         notes = realm.objects(Note.self).sorted(byKeyPath: "date", ascending: isSorted)
         tableView.reloadData()
     }
-    
+
 }
 
 // MARK: - Table View Data Source
 
 extension ViewController: UITableViewDataSource {
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if notes.isEmpty {
             backgroundLabel.isHidden = false
             self.tableView.separatorStyle = .none
             return 0
         }
-        
+
         backgroundLabel.isHidden = true
         self.tableView.separatorStyle = .singleLine
-        
+
         return notes.count
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! TableViewCell
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as? TableViewCell else {
+            return UITableViewCell()
+        }
         let simpleMark = notes[indexPath.row]
         cell.configure(with: simpleMark)
         return cell
@@ -127,38 +129,40 @@ extension ViewController: UITableViewDataSource {
 extension ViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        
-        let vc = storyboard?.instantiateViewController(withIdentifier: "DetailVC") as! DetailViewController
+        guard let viewController = storyboard?.instantiateViewController(withIdentifier: "DetailVC")
+            as? DetailViewController else { return }
         let note = notes[indexPath.row]
-        vc.configuration(simpleMark: note, with: ViewState(vc))
-        navigationController?.pushViewController(vc, animated: true)
+        viewController.configuration(simpleMark: note, with: ViewState(viewController))
+        navigationController?.pushViewController(viewController, animated: true)
     }
-    
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 85
     }
-    
+
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let edit = editAction(at: indexPath)
         let delete = deleteAction(at: indexPath)
         return UISwipeActionsConfiguration(actions: [delete, edit])
     }
-    
-    func editAction(at indexPath: IndexPath) -> UIContextualAction{
+
+    func editAction(at indexPath: IndexPath) -> UIContextualAction {
         let note = notes[indexPath.row]
-        let action = UIContextualAction(style: .normal, title: "Edit") { [weak self] (action, view, completion) in
-            let vc = self?.storyboard?.instantiateViewController(withIdentifier: "DetailVC") as! DetailViewController
-            vc.configuration(simpleMark: note, with: EditState(vc))
-            self?.navigationController?.pushViewController(vc, animated: true)
+        let action = UIContextualAction(style: .normal, title: "Edit") { [weak self] (_, _, completion) in
+            guard let viewController = self?.storyboard?.instantiateViewController(withIdentifier: "DetailVC") as? DetailViewController else {
+                return
+            }
+            viewController.configuration(simpleMark: note, with: EditState(viewController))
+            self?.navigationController?.pushViewController(viewController, animated: true)
             completion(true)
         }
         action.backgroundColor = .green
         return action
     }
-    
-    func deleteAction(at indexPath: IndexPath) -> UIContextualAction{
+
+    func deleteAction(at indexPath: IndexPath) -> UIContextualAction {
         let note = notes[indexPath.row]
-        let action = UIContextualAction(style: .destructive, title: "Delete") {[weak self] (action, view, completion) in
+        let action = UIContextualAction(style: .destructive, title: "Delete") {[weak self] (_, _, completion) in
             RealmService.shared.delete(note)
             self?.tableView.deleteRows(at: [indexPath], with: .automatic)
             completion(true)
@@ -179,11 +183,11 @@ extension ViewController: UISearchResultsUpdating {
         } else {
             let predicat = NSPredicate(format: "text CONTAINS [c] %@", text)
             notes = realm.objects(Note.self).filter(predicat).sorted(byKeyPath: "date", ascending: isSorted)
-            
+
         }
         tableView.reloadData()
     }
-    
+
     func searchBarIsEmpty() -> Bool {
         // Returns true if the text is empty or nil
         return searchController.searchBar.text?.isEmpty ?? true
@@ -196,10 +200,8 @@ extension ViewController: UISearchBarDelegate {
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         navigationItem.rightBarButtonItems?[1].isEnabled = false
     }
-    
+
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         navigationItem.rightBarButtonItems?[1].isEnabled = true
     }
 }
-
-
