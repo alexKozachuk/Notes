@@ -1,2 +1,2 @@
 # Notes
-Test assignment for Evo Mobile Lab
+Simple app for creating and saving notes
